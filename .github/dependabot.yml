@@ -1,0 +1,32 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # Expo pins SDK-compatible versions; apply these with `npx expo install --fix`.
+      expo:
+        patterns: ['expo', 'expo-*', '@expo/*', 'react-native', 'react-native-*']
+      next:
+        patterns: ['next', 'eslint-config-next']
+      tooling:
+        patterns:
+          [
+            'eslint*',
+            '@eslint/*',
+            'typescript-eslint',
+            'prettier',
+            'vitest',
+            '@vitest/*',
+            '@playwright/test',
+          ]
+    ignore:
+      # React must match the version react-native is built against.
+      - dependency-name: react
+      - dependency-name: react-dom
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
