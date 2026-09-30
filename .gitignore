@@ -1,0 +1,30 @@
+node_modules/
+.DS_Store
+*.tsbuildinfo
+coverage/
+
+# env
+.env
+.env*.local
+!.env.example
+
+# expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+/apps/mobile/ios
+/apps/mobile/android
+
+# next
+.next/
+out/
+next-env.d.ts
+
+# supabase
+supabase/.branches
+supabase/.temp
+
+# editors
+.vscode/
+.idea/

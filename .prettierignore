@@ -1,0 +1,10 @@
+node_modules
+coverage
+dist
+.next
+.expo
+package-lock.json
+packages/shared/src/database.types.ts
+supabase/.temp
+apps/mobile/assets
+docs/screenshots

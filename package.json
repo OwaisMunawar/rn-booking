@@ -1,0 +1,31 @@
+{
+  "name": "rn-booking",
+  "version": "0.1.0",
+  "private": true,
+  "description": "On-demand services booking: Expo app, Next.js admin and Supabase backend in one monorepo.",
+  "license": "MIT",
+  "author": "Owais Munawwar",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev:mobile": "npm run start --workspace @rn-booking/mobile",
+    "dev:admin": "npm run dev --workspace @rn-booking/admin",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "build:admin": "npm run build --workspace @rn-booking/admin",
+    "export:mobile": "npm run export:web --workspace @rn-booking/mobile",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build:admin",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.6.0",
+    "typescript": "~6.0.3"
+  }
+}
