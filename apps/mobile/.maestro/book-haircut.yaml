@@ -1,0 +1,34 @@
+# Booking happy path in demo mode: browse -> provider -> pick a day and time -> confirm.
+# Run against a development build: npx expo run:ios, then maestro test .maestro
+appId: dev.owaism.rnbooking
+name: Book a haircut
+tags:
+  - booking
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible:
+      id: 'provider-a0000000-0000-4000-8000-000000000001'
+    timeout: 20000
+- tapOn:
+    id: 'provider-a0000000-0000-4000-8000-000000000001'
+- tapOn:
+    id: 'service-b0000000-0000-4000-8000-000000000001'
+- extendedWaitUntil:
+    visible: 'Pick a time'
+    timeout: 10000
+# Tomorrow always has open times; today may be over.
+- tapOn:
+    id: 'date-.*'
+    index: 1
+- tapOn:
+    id: 'slot-.*'
+    index: 0
+- tapOn:
+    id: 'confirm-booking'
+- extendedWaitUntil:
+    visible: 'Upcoming'
+    timeout: 10000
+- assertVisible: "Men's haircut"
+- assertVisible: 'Cancel booking'
