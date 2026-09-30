@@ -28,3 +28,7 @@ supabase/.temp
 # editors
 .vscode/
 .idea/
+
+# test output
+test-results/
+playwright-report/

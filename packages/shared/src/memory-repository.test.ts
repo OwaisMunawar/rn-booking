@@ -165,6 +165,8 @@ describe('MemoryBookingRepository', () => {
       serviceName: HAIRCUT.name,
     });
     expect(await repo.listBookings({ status: 'pending' })).toEqual([]);
+    expect((await repo.getBooking(view!.id))?.serviceName).toBe(HAIRCUT.name);
+    expect(await repo.getBooking(randomId())).toBeNull();
   });
 
   it('restricts deletes that would orphan bookings', async () => {

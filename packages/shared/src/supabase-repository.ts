@@ -200,13 +200,17 @@ export class SupabaseBookingRepository implements BookingRepository {
     if (filter.to) query = query.lt('start_at', filter.to);
     const { data, error } = await query;
     if (error) throw toDomainError(error);
-    return data.map((row) => ({
-      ...mapBooking(row),
-      serviceName: row.service.name,
-      providerName: row.provider.name,
-      providerTimeZone: row.provider.time_zone,
-      customerName: row.customer.full_name || 'Customer',
-    }));
+    return data.map(mapBookingView);
+  }
+
+  async getBooking(id: string): Promise<BookingView | null> {
+    const { data, error } = await this.client
+      .from('bookings')
+      .select(BOOKING_VIEW_SELECT)
+      .eq('id', id)
+      .maybeSingle();
+    if (error) throw toDomainError(error);
+    return data ? mapBookingView(data) : null;
   }
 
   async createBooking(input: NewBooking): Promise<Booking> {
@@ -298,6 +302,22 @@ function mapRule(row: RuleRow): AvailabilityRule {
     weekday: row.weekday,
     startTime: row.start_time.slice(0, 5),
     endTime: row.end_time.slice(0, 5),
+  };
+}
+
+interface BookingViewRow extends BookingRow {
+  service: { name: string };
+  provider: { name: string; time_zone: string };
+  customer: { full_name: string };
+}
+
+function mapBookingView(row: BookingViewRow): BookingView {
+  return {
+    ...mapBooking(row),
+    serviceName: row.service.name,
+    providerName: row.provider.name,
+    providerTimeZone: row.provider.time_zone,
+    customerName: row.customer.full_name || 'Customer',
   };
 }
 

@@ -55,6 +55,7 @@ export interface BookingRepository {
   listBusyIntervals(providerId: string, from: string, to: string): Promise<BusyInterval[]>;
 
   listBookings(filter?: BookingFilter): Promise<BookingView[]>;
+  getBooking(id: string): Promise<BookingView | null>;
   /** Persists a booking. Callers should validate the slot first (see bookSlot). */
   createBooking(input: NewBooking): Promise<Booking>;
   updateBookingStatus(id: string, status: BookingStatus): Promise<Booking>;

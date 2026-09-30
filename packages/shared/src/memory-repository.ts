@@ -172,6 +172,11 @@ export class MemoryBookingRepository implements BookingRepository {
       .map((b) => this.toView(b));
   }
 
+  async getBooking(id: string): Promise<BookingView | null> {
+    const booking = this.data.bookings.find((b) => b.id === id);
+    return booking ? this.toView(booking) : null;
+  }
+
   async createBooking(input: NewBooking): Promise<Booking> {
     const service = await this.getService(input.serviceId);
     if (!service) throw new DomainError('not_found', 'Service not found');

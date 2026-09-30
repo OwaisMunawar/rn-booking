@@ -111,6 +111,9 @@ describe('bookings and RLS', () => {
 
   it("shows providers only their own provider's bookings", async () => {
     const theirs = await provider.listBookings();
+    const foreign = (await admin.listBookings()).find((b) => b.providerId !== FADE.id);
+    expect(await provider.getBooking(foreign!.id)).toBeNull();
+    expect((await provider.getBooking(theirs[0]!.id))?.providerId).toBe(FADE.id);
     expect(theirs.length).toBeGreaterThan(0);
     expect(theirs.every((b) => b.providerId === FADE.id)).toBe(true);
     expect(theirs.some((b) => b.customerName !== 'Customer')).toBe(true);
