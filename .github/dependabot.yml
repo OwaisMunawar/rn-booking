@@ -6,26 +6,26 @@ updates:
       interval: weekly
     open-pull-requests-limit: 5
     groups:
-      # Expo pins SDK-compatible versions; apply these with `npx expo install --fix`.
-      expo:
-        patterns: ['expo', 'expo-*', '@expo/*', 'react-native', 'react-native-*']
       next:
         patterns: ['next', 'eslint-config-next']
       tooling:
-        patterns:
-          [
-            'eslint*',
-            '@eslint/*',
-            'typescript-eslint',
-            'prettier',
-            'vitest',
-            '@vitest/*',
-            '@playwright/test',
-          ]
+        patterns: ['prettier', 'vitest', '@vitest/*', '@playwright/test']
     ignore:
+      # Expo pins SDK-compatible versions of these; upgrade them together with
+      # `npx expo install --fix` during an SDK upgrade.
+      - dependency-name: 'expo'
+      - dependency-name: 'expo-*'
+      - dependency-name: '@expo/*'
+      - dependency-name: 'jest-expo'
+      - dependency-name: 'react-native'
+      - dependency-name: 'react-native-*'
+      - dependency-name: '@react-native-async-storage/*'
       # React must match the version react-native is built against.
       - dependency-name: react
       - dependency-name: react-dom
+      # Major tooling upgrades (ESLint, TypeScript) are done by hand.
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
   - package-ecosystem: github-actions
     directory: /
     schedule:
