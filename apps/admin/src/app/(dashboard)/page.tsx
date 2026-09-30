@@ -46,7 +46,7 @@ export default async function OverviewPage() {
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-5">
-        <Card className="xl:col-span-3">
+        <Card className="self-start xl:col-span-3">
           <h2 className="mb-4 font-medium">Revenue, last 14 days</h2>
           <RevenueChart points={stats.revenueByDay} />
         </Card>

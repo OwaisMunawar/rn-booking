@@ -14,6 +14,8 @@ const ORDER = [1, 2, 3, 4, 5, 6, 0];
 
 type Row = AvailabilityRuleInput & { key: number };
 
+const timeInputClass = inputClass.replace('block', '').replace('w-full', 'w-32');
+
 let nextKey = 0;
 const withKey = (rule: AvailabilityRuleInput): Row => ({ ...rule, key: nextKey++ });
 
@@ -68,7 +70,7 @@ export function AvailabilityEditor({
         {ORDER.map((weekday) => {
           const dayRows = rows
             .filter((row) => row.weekday === weekday)
-            .sort((a, b) => a.kind.localeCompare(b.kind) || a.startTime.localeCompare(b.startTime));
+            .sort((a, b) => b.kind.localeCompare(a.kind) || a.startTime.localeCompare(b.startTime));
           return (
             <div
               key={weekday}
@@ -98,7 +100,7 @@ export function AvailabilityEditor({
                       aria-label={`${WEEKDAYS[weekday]} ${row.kind} start`}
                       value={row.startTime}
                       onChange={(e) => update(row.key, { startTime: e.target.value })}
-                      className={`${inputClass} w-32`}
+                      className={timeInputClass}
                     />
                     <span className="text-zinc-400">to</span>
                     <input
@@ -106,7 +108,7 @@ export function AvailabilityEditor({
                       aria-label={`${WEEKDAYS[weekday]} ${row.kind} end`}
                       value={row.endTime}
                       onChange={(e) => update(row.key, { endTime: e.target.value })}
-                      className={`${inputClass} w-32`}
+                      className={timeInputClass}
                     />
                     <button
                       type="button"
