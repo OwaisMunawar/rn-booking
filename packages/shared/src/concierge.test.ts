@@ -63,14 +63,14 @@ describe('parseConciergeQuery', () => {
 
   it('describes its interpretation', () => {
     expect(describeQuery(parse('haircut near me Saturday afternoon under $40'))).toEqual([
-      'cut',
+      'Hair & barber',
       'Sat, Oct 10',
       '12:00 PM - 5:00 PM',
       'under $40',
       'within 5 km',
     ]);
     expect(describeQuery(parse('pilates after 4'))).toEqual([
-      'fitness',
+      'Fitness',
       'Wed, Oct 7',
       '4:00 PM - close',
     ]);

@@ -1,0 +1,26 @@
+# The concierge answers in demo mode (no API key) and hands off to the booking screen.
+appId: dev.owaism.rnbooking
+name: Ask the concierge
+tags:
+  - concierge
+---
+- launchApp:
+    clearState: true
+- tapOn: 'Concierge'
+- tapOn:
+    id: 'concierge-input'
+- inputText: 'Haircut near me Saturday afternoon under $40'
+- tapOn:
+    id: 'concierge-submit'
+- extendedWaitUntil:
+    visible:
+      id: 'concierge-answer'
+    timeout: 20000
+- assertVisible: 'Fade & Co Barbers.*'
+- tapOn:
+    id: 'concierge-slot-.*'
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: 'confirm-booking'
+    timeout: 10000

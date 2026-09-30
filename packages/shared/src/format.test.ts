@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   distanceKm,
+  formatDistance,
   formatClock,
   formatDateLabel,
   formatDuration,
@@ -34,6 +35,11 @@ describe('format', () => {
     expect(formatDuration(45)).toBe('45 min');
     expect(formatDuration(60)).toBe('1 hr');
     expect(formatDuration(90)).toBe('1 hr 30 min');
+  });
+
+  it('formats distances', () => {
+    expect(formatDistance(0.04)).toBe('under 0.1 km');
+    expect(formatDistance(2.13)).toBe('2.1 km');
   });
 
   it('computes great-circle distance', () => {

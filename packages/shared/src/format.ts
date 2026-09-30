@@ -48,6 +48,10 @@ export function formatDuration(minutes: number): string {
   return m === 0 ? `${h} hr` : `${h} hr ${m} min`;
 }
 
+export function formatDistance(km: number): string {
+  return km < 0.1 ? 'under 0.1 km' : `${km.toFixed(1)} km`;
+}
+
 /** Great-circle distance in kilometres. */
 export function distanceKm(
   a: { lat: number; lng: number },

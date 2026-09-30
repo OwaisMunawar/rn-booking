@@ -3,9 +3,9 @@ import { z } from 'zod';
 import type { Slot } from './availability';
 import { getSlotsForService } from './booking-service';
 import { DEMO_LOCATION } from './demo-data';
-import { formatClock, formatDateLabel, formatPrice, distanceKm } from './format';
+import { distanceKm, formatClock, formatDateLabel, formatDistance, formatPrice } from './format';
 import type { BookingRepository } from './repository';
-import { categorySchema, type Category } from './schemas';
+import { CATEGORY_LABELS, categorySchema, type Category } from './schemas';
 import { addDays, parseTime, toLocalDate, weekdayOf } from './time';
 
 /**
@@ -179,8 +179,8 @@ function toClock(hour?: string, minute?: string, meridiem?: string): string {
 
 export function describeQuery(parsed: ParsedQuery): string[] {
   const chips: string[] = [];
-  if (parsed.query) chips.push(parsed.query);
-  else if (parsed.category) chips.push(parsed.category);
+  if (parsed.category) chips.push(CATEGORY_LABELS[parsed.category]);
+  else if (parsed.query) chips.push(parsed.query);
   chips.push(formatDateLabel(parsed.date));
   if (parsed.earliest || parsed.latest) {
     chips.push(
@@ -260,7 +260,7 @@ export function summarise(results: ConciergeResult[], parsed: Pick<ParsedQuery, 
   const lines = withSlots.slice(0, 3).map((r) => {
     const first = r.slots[0];
     const at = first ? ` from ${formatClock(first.localTime)}` : '';
-    return `${r.service.serviceName} at ${r.service.providerName} (${formatPrice(r.service.priceCents)}, ${r.service.distanceKm} km)${at}`;
+    return `${r.service.serviceName} at ${r.service.providerName} (${formatPrice(r.service.priceCents)}, ${formatDistance(r.service.distanceKm)})${at}`;
   });
   return `Here ${withSlots.length === 1 ? 'is 1 option' : `are ${withSlots.length} options`} for ${formatDateLabel(withSlots[0]?.date ?? parsed.date, { weekday: 'long' })}:\n${lines.map((l) => `- ${l}`).join('\n')}\nTap a time to book it.`;
 }
