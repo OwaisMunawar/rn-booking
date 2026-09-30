@@ -64,12 +64,15 @@ jobs:
           cache: npm
       - uses: supabase/setup-cli@v1
         with:
-          version: latest
+          version: 2.109.1
       - run: npm ci
       # Applies every migration and supabase/seed.sql to a fresh local stack.
       - run: supabase start
       - name: Generated types match the schema
         run: |
           supabase gen types typescript --local --schema public > /tmp/database.types.ts
-          diff -u packages/shared/src/database.types.ts /tmp/database.types.ts
+          # Compare formatted output so CLI formatting changes don't read as drift.
+          npx prettier --stdin-filepath x.ts < packages/shared/src/database.types.ts > /tmp/committed.ts
+          npx prettier --stdin-filepath x.ts < /tmp/database.types.ts > /tmp/generated.ts
+          diff -u /tmp/committed.ts /tmp/generated.ts
       - run: npm run test:integration
