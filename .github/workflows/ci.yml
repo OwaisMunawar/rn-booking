@@ -46,7 +46,7 @@ jobs:
         working-directory: apps/admin
       - run: npm run build:admin
       - run: npm run test:e2e
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-traces
