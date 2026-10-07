@@ -9,7 +9,7 @@
     "@rn-booking/shared": "*",
     "@supabase/supabase-js": "^2.117.2",
     "@tanstack/react-query": "^5.90.0",
-    "ai": "^7.0.122",
+    "ai": "^7.0.127",
     "expo": "~57.0.26",
     "expo-constants": "~57.0.20",
     "expo-font": "~57.0.4",
